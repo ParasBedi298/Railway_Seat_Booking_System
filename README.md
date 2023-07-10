@@ -10,12 +10,10 @@ The languages used are Javascript, HTML and CSS.
 
 
 Dependencies: 
-
 The project is made using NodeJS. Visit NodeJS for more information on how to install NodeJs on your system.
 
 
 Building: 
-
 - Extract the backend and frontend zip folders.
 - Run npm install to install all the node dependencies.
 - Start the MySQL server.
