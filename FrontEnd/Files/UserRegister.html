@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Register</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+	<style>
+		*{
+			box-sizing: border-box;
+		}
+		body{
+			background-image: url(back.jpg  );
+			background-size: cover;
+			background-repeat: no-repeat;
+			margin-left: 10%;
+			margin-right: 10%;
+			font-family: 'Nunito', serif;
+        	font-size: 48px;
+		}
+		.hd{
+			text-align: center;
+			padding: 10px;
+			margin-left: 0%;
+			margin-right: 0%;
+			color: #772d2d;
+			font-weight: bold;
+			font-size: 40px;
+		}
+		.main{
+			border:1px blue solid;
+			background-color: #DBD5D5;
+			border-radius: 10px;
+			text-align: center;
+			margin-left:33.3%;
+			margin-right: 33.3%;
+			padding:10px;
+			margin-bottom: 10px;
+			width:500px;
+			color:red;
+		}
+		.menu{
+			border:1px black solid;
+			border-radius: 13px;
+			background-color: white;
+			color:green;
+			font-weight: bold;
+			font-size:18px;
+			text-align: center;
+			margin-right:15px;
+			padding:5px;
+			padding-left: 10px;
+			padding-right: 10px;
+			width:130px;
+		}
+		a:hover{
+		color:red;
+	}
+	a:link{
+		color: black;
+		text-decoration: none;
+	}
+	.tab{    
+		border: 1px black solid;
+		border-radius: 15px;
+		background-color: #DBD5D5;
+		margin-left: 31%;
+		width: 450px;
+		color: red;
+		font-weight: bold;
+		font-style: normal;
+		text-align: center;
+		font-size: 22px;
+		margin-bottom: 10px;
+		padding: 10px;
+		color: black;
+	}
+	.green{
+		display: inline-block;
+        text-align: right;
+	}
+	
+	footer{
+		margin-top: 15%;
+	}
+	</style>
+</head>
+<body>
+<header>
+	<h1 class="hd">Railway Ticket Booking System</h1>
+	<div class="tab">
+		<p1 class="menu"><a href="UserLogin.html">Login as User</a></p1>
+		<p1 class="menu"><a href="UserRegister.html">New User Register</a></p1>
+	</div>
+</header>
+<table class="tab brown hd">
+		<tr>
+			<td>New User Registration</td>
+		</tr>
+	</table>
+
+	<table class="tab green" border="0px">
+		
+		<tr>
+			<td>
+					Name: <input type="text" name="name" required id="username"><br/><br/>	
+					Email Id : <input type="email" name="mailid" required id="email"><br/><br/>
+					Age : <input type="email" name="age" required id="age"><br/><br/>
+					Gender : <input type="email" name="gender" required id="gender"><br/><br/>
+					Password : <input type="password" name="pword" required id="password"><br/><br/>
+			</td>
+			
+		</tr>  
+	</table>
+<button onclick="register()" class="tab red">I AGREE FOR ALL TERMS & CONDITIONS ! REGISTER ME</button>
+<script>
+  async function register()
+  {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+	if(!username || !password || !email || !age || !gender){
+		alert("Please Enter correct credentials")
+	}
+    const data = {
+      "user_name":username,
+        "user_password": Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256' , new TextEncoder().encode(password)))).toString(),
+        "age":age,
+        "gender":gender,
+        "user_email":email
+      }
+
+
+    fetch('http://localhost:5000/api/members', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)})
+      .then(async d=>{if(d.status == 200)
+        {
+          res = await d.json();
+		  localStorage.setItem('userid', res.user_id)
+		  window.location = 'home.html'
+		   
+        }})
+	
+	
+  };
+</script>
+</body>
+</html>

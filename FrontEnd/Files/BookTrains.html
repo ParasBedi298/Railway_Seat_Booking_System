@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Book Train</title>
+	<link rel="stylesheet" href="UserHome_Css.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+    <style>
+      body {
+        font-family: 'Nunito', serif;
+        font-size: 48px;
+      }
+    </style>
+</head>
+<body>
+	<header>
+		<h1 class="hd">Railway Ticket Booking System </h1>
+		<div class="home">
+			<p1 class="menu"><a href="home.html">Home</a></p1>
+		</div>
+		<div class="home">
+			<p1 class="menu"><a href="SearchTrains.html">Search Trains</a></p1>
+		</div>
+		<div class="home">
+			<p1 class="menu"><a href="BookTrains.html">Book Trains</a></p1>
+		</div>
+		<div class="home" onclick="logout()">
+			<p1 class="menu">Logout</p1>
+		</div>
+	</header>
+
+
+<div class="tab"><p1 class="menu">Book Trains</p1></div>
+<div class="tab red">
+		Train Id: <input type="text" name="trainnumber" id="Train_ID"><br/><br/>
+		Seats: <input type="text" name="trainnumber" id="Seat"><br/><br/>
+		<button onclick="register()">Submit</button>
+</div>
+
+<div id="results">
+
+</div>
+</div><br/>
+<script>
+  async function register()
+  {
+	const user_id = parseInt(localStorage.getItem('userid'));
+    const  train_id= parseInt(document.getElementById('Train_ID').value);
+    const  seats= document.getElementById('Seat').value;
+    const data={
+      "user_id":user_id,
+      "train_id":(train_id),
+	  "seats":seats
+  }
+  console.log(data.train_id);
+
+
+    fetch('http://localhost:5000/api/members/new', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)})
+      .then(async d=>{if(d.status == 200)
+        {
+            resultsdiv = document.getElementById('results')
+            resultsdiv.innerHTML =`
+                    <div class="tab red">
+                        Booking Done
+                    </div>
+                `
+        }
+    else{            resultsdiv = document.getElementById('results')  
+                resultsdiv.innerHTML =`
+                    <div class="tab red">
+                        No Seats available
+                    </div>
+                `}})
+    
+  };
+  function logout() {
+		localStorage.removeItem('user_id');
+		window.location = 'UserRegister.html'
+	}
+</script>
+</body>
+</html>

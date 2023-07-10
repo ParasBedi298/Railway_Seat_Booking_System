@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>LOGIN</title>
+	<link rel="stylesheet" href="UserHome_Css.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+    <style>
+      body {
+        font-family: 'Nunito', serif;
+        font-size: 48px;
+      }
+    </style>
+</head>
+<body>
+<header>
+	<h1 class="hd">Railway Ticket Booking System </h1>
+	<div class="home">
+		<p1 class="menu"><a href="home.html">Home</a></p1>
+	</div>
+	<div class="home">
+		<p1 class="menu"><a href="SearchTrains.html">Search Trains</a></p1>
+	</div>
+	<div class="home">
+		<p1 class="menu"><a href="BookTrains.html">Book Trains</a></p1>
+	</div>
+	<div class="home" onclick="logout()">
+		<p1 class="menu">Logout</p1>
+	</div>
+</header>
+<div class="tab red"><button class="Detail_but" onclick="register()">View Details</button></div>
+<div id="results1">
+
+</div>
+<div id="results2">
+
+</div>
+<script>
+	async function register(){
+	
+		const user_id = localStorage.getItem('userid');
+		const data={
+			"user_id":parseInt(user_id)
+		}
+		console.log(data)
+	
+  fetch('http://localhost:5000/api/members/user', {
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)})
+		.then(async d=>{if(d.status == 200)
+		  {
+			  const data = await d.json();
+			  console.log(data);
+			  resultsdiv = document.getElementById('results1')
+			data.forEach(element => {
+				  resultsdiv.innerHTML = resultsdiv.innerHTML + `
+					  <div class="tab red">
+						  User ID = ${element.user_id} <br>
+						  User Name= ${element.user_name} <br>
+						  Age= ${element.age}<br>
+						  Gender= ${element.gender} <br>
+						  Email ID=  ${element.user_email} <br>
+					  </div>
+				  `
+			  });
+		  }
+	  })
+	  fetch('http://localhost:5000/api/members/profile', {
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)})
+		.then(async d=>{if(d.status == 200)
+		  {
+			  const data = await d.json();
+			  console.log(data);
+			  resultsdiv = document.getElementById('results2')
+
+			  data.forEach(element => {
+				  resultsdiv.innerHTML = resultsdiv.innerHTML + `
+					  <div class="tab red">
+						Train ID = ${element.train_id} <br>
+						  Train Starting Position= ${element.t_source} <br>
+						  Train Ending Position= ${element.t_destination} <br>
+						  Date= ${element.t_date}<br>
+						  Start Time= ${element.t_start_time} <br>
+						  Stop Time=  ${element.t_stop_time} <br>
+					  </div>
+				  `
+			  });
+		  }
+		  else{
+			resultsdiv = document.getElementById('results2');
+			resultsdiv.innerHTML=resultsdiv.innerHTML+"<div class='tab red'>No Booking Available</div>";
+		  }
+	  })
+	};
+	function logout() {
+		localStorage.removeItem('user_id');
+		window.location = 'UserRegister.html'
+	}
+</script>
+
+
+</body>
+</html>
