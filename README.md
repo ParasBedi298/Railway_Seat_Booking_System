@@ -1,8 +1,8 @@
 # Railway_Seat_Booking_System
 
 Railway-Reservation-Management
-Welcome to the Railway-Management-System. Created a website which manages authentication, booking of trains, 
-searching of train by their source, destination and time.
+Welcome to the Railway-Management-System. We created a website which manages authentication, booking of trains, 
+searching of train by their source, destination and time. This project was built in a team of 6 members, under the course Applied Database Practicum at IIT Mandi.
 
 
 This project is currently using NodeJs and MySQL as the technologies for building the project with a javascript backend.
