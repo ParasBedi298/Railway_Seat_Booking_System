@@ -14,7 +14,6 @@ The project is made using NodeJS. Visit NodeJS for more information on how to in
 
 
 Building: 
-- Extract the backend and frontend zip folders.
 - Run npm install to install all the node dependencies.
 - Start the MySQL server.
 - Enter npm run start to start the server on the specified port.
